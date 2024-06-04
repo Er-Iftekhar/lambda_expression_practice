@@ -30,10 +30,10 @@ public class EmployeeTestLambdasToPredicateRefactor {
 
 		// 2.Get all the java developers.
 		Predicate<Employee>  javasSkillsFilter = (Employee employee) -> employee.getSkills().contains(Skill.JAVA);
-		List<Employee> javaDevelopers = getEmployeesFilteredBy(javasSkillsFilter);
+		List<Employee> javaFilter = getEmployeesFilteredBy(javasSkillsFilter);
 
 		System.out.println("--------Java Developers--------");
-		System.out.println(javaDevelopers);
+		System.out.println(javaFilter);
 
 		// 3. Get employees > 10 years experience
 
@@ -44,7 +44,9 @@ public class EmployeeTestLambdasToPredicateRefactor {
 		System.out.println(seniorProfessionals);
 		
 		// How will you implement the requirement Java Developers in EDC ? 
-		
+		System.out.println("-----------Java developers belonging to unit EDC----------------");
+		List<Employee> javaDevsInEDC = getEmployeesFilteredBy( javasSkillsFilter.and(unitFilter));
+		System.out.println(javaDevsInEDC);
 	}
 
 	public static List<Employee> getEmployeesFilteredBy(Predicate<Employee> filter) {
