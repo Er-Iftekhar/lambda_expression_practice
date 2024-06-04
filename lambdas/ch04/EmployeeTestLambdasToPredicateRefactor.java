@@ -2,6 +2,7 @@ package lambdas.ch04;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import lambdas.employee.Designation;
 import lambdas.employee.Employee;
@@ -21,14 +22,14 @@ public class EmployeeTestLambdasToPredicateRefactor {
 
 		Unit unit = Unit.EDC;
 		
-		EmployeeFilter unitFilter = (Employee employee) ->  employee.getUnit() == unit;
+		Predicate<Employee> unitFilter = (Employee employee) ->  employee.getUnit() == unit;
 		List<Employee> edcEmployees = getEmployeesFilteredBy(unitFilter);
 
 		System.out.println("--------EDC Employees--------");
 		System.out.println(edcEmployees);
 
 		// 2.Get all the java developers.
-		EmployeeFilter  javasSkillsFilter = (Employee employee) -> employee.getSkills().contains(Skill.JAVA);
+		Predicate<Employee>  javasSkillsFilter = (Employee employee) -> employee.getSkills().contains(Skill.JAVA);
 		List<Employee> javaDevelopers = getEmployeesFilteredBy(javasSkillsFilter);
 
 		System.out.println("--------Java Developers--------");
@@ -36,7 +37,7 @@ public class EmployeeTestLambdasToPredicateRefactor {
 
 		// 3. Get employees > 10 years experience
 
-		EmployeeFilter seniorProfessionalsFilter = (Employee employee) -> employee.getExperience() > 10;
+		Predicate<Employee> seniorProfessionalsFilter = (Employee employee) -> employee.getExperience() > 10;
 		List<Employee> seniorProfessionals = getEmployeesFilteredBy(seniorProfessionalsFilter);
 
 		System.out.println("--------Senior guys--------");
@@ -46,11 +47,11 @@ public class EmployeeTestLambdasToPredicateRefactor {
 		
 	}
 
-	public static List<Employee> getEmployeesFilteredBy(EmployeeFilter filter) {
+	public static List<Employee> getEmployeesFilteredBy(Predicate<Employee> filter) {
 
 		List<Employee> filteredEmployees = new ArrayList<>();
 		for (Employee employee : employees) {
-			if (filter.filterEmployee(employee)) {
+			if (filter.test(employee)) {
 				filteredEmployees.add(employee);
 			}
 		}
